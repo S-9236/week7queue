@@ -1,0 +1,49 @@
+// 5. Program to implement a priority queue
+#include <stdio.h>
+#define MAX 5
+int pq[MAX], pr[MAX], n = 0;
+void enqueue(int data, int priority) {
+    if (n == MAX)
+        printf("Queue Overflow\n");
+    else {
+        int i = n - 1;
+        while (i >= 0 && pr[i] > priority) {
+            pq[i + 1] = pq[i];
+            pr[i + 1] = pr[i];
+            i--;
+        }
+        pq[i + 1] = data;
+        pr[i + 1] = priority;
+        n++;
+    }
+}
+void dequeue() {
+    if (n == 0)
+        printf("Queue Underflow\n");
+    else {
+        printf("Dequeued: %d\n", pq[0]);
+        for (int i = 0; i < n - 1; i++) {
+            pq[i] = pq[i + 1];
+            pr[i] = pr[i + 1];
+        }
+        n--;
+    }
+}
+void display() {
+    if (n == 0)
+        printf("Queue is empty\n");
+    else {
+        for (int i = 0; i < n; i++)
+            printf("(%d, p=%d) ", pq[i], pr[i]);
+        printf("\n");
+    }
+}
+int main() {
+    enqueue(10, 2);
+    enqueue(20, 1);
+    enqueue(30, 3);
+    display();
+    dequeue();
+    display();
+    return 0;
+}
